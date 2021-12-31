@@ -102,7 +102,7 @@ for i in "${ASIMOV_VENDOR_DIR_SENTINELS[@]}"; do
     find_parameters_vendor+=( -or \( \
         -type d \
         -name "${_exclude_name}" \
-        -execdir test -e "${_sibling_sentinel_name}" \; \
+        -execdir \[ -e "${_sibling_sentinel_name}" \] \; \
         -prune \
         -print \
     \) )
