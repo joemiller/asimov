@@ -67,6 +67,8 @@ readonly ASIMOV_VENDOR_DIR_SENTINELS=(
 # Reads the newline-separated list of paths from stdin.
 exclude_file() {
     local path
+    local mb_excluded=0
+
     while IFS=$'\n' read -r path; do
         if tmutil isexcluded "${path}" | grep -Fq '[Excluded]'; then
             echo "- ${path} is already excluded, skipping."
@@ -75,9 +77,11 @@ exclude_file() {
 
         tmutil addexclusion "${path}"
 
-        sizeondisk=$(du -hs "${path}" | cut -f1)
-        echo "- ${path} has been excluded from Time Machine backups (${sizeondisk})."
+        sizeondisk=$(du -ms "${path}" | cut -f1)
+        echo "- ${path} has been excluded from Time Machine backups (${sizeondisk} MB)."
+        mb_excluded=$((mb_excluded + sizeondisk))
     done
+    echo "Total excluded: $mb_excluded MB"
 }
 
 # Iterate over the skip directories to construct the `find` expression.
