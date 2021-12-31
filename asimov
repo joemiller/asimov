@@ -60,6 +60,7 @@ readonly ASIMOV_VENDOR_DIR_SENTINELS=(
     'venv requirements.txt'       # virtualenv (Python)
     'deps mix.exs'                # Mix dependencies (Elixir)
     '.build mix.exs'              # Mix build files (Elixir)
+    '.terragrunt-cache terragrunt.hcl' # Terragrunt (terraform)
 )
 
 # Exclude the given paths from Time Machine backups.
